@@ -1,19 +1,19 @@
-   #include <Servo.h> // include Servo library 
+   #include <Servo.h> // подключает серво-библиотеку
 
-Servo horizontal; // horizontal servo
-int servoh = 90; // stand horizontal servo
+Servo horizontal; // горизонтальный сервопривод
+int servoh = 90; // положение горизонтального сервопривода
 //
-Servo vertical; // vertical servo 
-int servov = 90; // stand vertical servo
+Servo vertical; // вертикальный сервопривод
+int servov = 90; // положение вертикального сервопривода
 
 int Tolerance = 100;
 
-// LDR pin connections
+// Подключения контактов Фоторезистора
 //name = analogpin;
-const int TOPpin = 0; //LDR TOP
-const int BOTTOMpin = 1; //LDR BOTTOM
-const int LEFTpin = 2; //LDR LEFT
-const int RIGHTpin = 3; //LDR RIGHT
+const int TOPpin = 0; //Верхний Фоторезистор
+const int BOTTOMpin = 1; //Нижний Фоторезистор
+const int LEFTpin = 2; //Левый Фоторезистор
+const int RIGHTpin = 3; //Правы Фоторезистор
 
 int TOP = 0;
 int BOTTOM = 0;
@@ -32,7 +32,7 @@ void setup()
 {
   analogReference(EXTERNAL);
   Serial.begin(9600);
-//servo connections
+//подключение сервоприводов
 //name.attacht(pin);
   horizontal.attach(10); 
   vertical.attach(9);
@@ -41,7 +41,7 @@ void setup()
 }
 
 void loop() 
-{ //start loop
+{ //цикл запуска
  
     TOP = 0;
     BOTTOM = 0;
@@ -74,10 +74,10 @@ Serial.print("TOLERANCE = "); Serial.println(Tolerance);
 
  
 
-  int verticalDIFFERENCE = TOP - BOTTOM; // check the diffirence of up and down
-  int horizontalDIFFERENCE = LEFT - RIGHT;// check the difference of left and right
+  int verticalDIFFERENCE = TOP - BOTTOM; // проверьте разницу вверх и вниз
+  int horizontalDIFFERENCE = LEFT - RIGHT;// проверьте разницу влево и вправо
 
-  if (abs(verticalDIFFERENCE) > Tolerance) // check if the diffirence is in the tolerance else change vertical angle
+  if (abs(verticalDIFFERENCE) > Tolerance) // проверка, находится ли разница в допуске, иначе измените вертикальный угол
   {vertical.attach(9);
     if (TOP > BOTTOM && servov < 110)
     {
@@ -104,7 +104,7 @@ Serial.print("TOLERANCE = "); Serial.println(Tolerance);
       vertical.detach();
   }
 
-  if (abs(horizontalDIFFERENCE) > Tolerance) // check if the diffirence is in the tolerance else change horizontal angle
+  if (abs(horizontalDIFFERENCE) > Tolerance) // проверка, находится ли разница в допуске, иначе измените горизонтальный угол
   {horizontal.attach(10);
       if (LEFT < RIGHT && servoh > 50)
       {
